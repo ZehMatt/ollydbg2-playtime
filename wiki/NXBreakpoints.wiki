@@ -1,3 +1,5 @@
+#summary Advantage of NX Breakpoints
+#labels Featured
 =NX Breakpoints=
 We also took the opportunity to implement NX Breakpoints into OllyDbg which allows you to break
 as soon a specific memory region is being executed. The difference between a memory breakpoint and
