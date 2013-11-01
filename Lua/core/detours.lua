@@ -1,10 +1,10 @@
-module("detours", package.seeall)
+module("Detours", package.seeall)
 
 -- Table of detours.
 local Detoured = {}
 
 --[[
-$detours.Add
+$Detours.Add
 @desc Attempts to detour a function, it will call the second parameter which is supposed to return the bytecode for the detour.
 @param number address The function to detour
 @param function callback Called as soon the trampoline is ready, this should return the bytecode for the detour.
@@ -44,7 +44,7 @@ function Add(address, fn, size)
 	backup = backup .. ";\njmp " .. string.hex(address + trampolinesize) .. "\n;"
 	
 	-- Generate code and copy.
-	local trampolinecode = assembler.Make(ip, backup)
+	local trampolinecode = Assembler.Make(ip, backup)
 	local backupcode = ReadMemory(address, trampolinesize)
 	
 	WriteMemory(ip, trampolinecode)
@@ -53,12 +53,15 @@ function Add(address, fn, size)
 	local newip = ip + #trampolinecode
 	
 	-- Now we patch the addr
-	local patch = assembler.Make(address, "jmp " .. string.hex(newip))
+	local patch = Assembler.Make(address, "jmp " .. string.hex(newip))
 	WriteMemory(address, patch)
 	
-	local detourcode = fn(newip, string.hex(trampoline))
+	local detourcode, err = fn(newip, trampoline)
 	if( not detourcode ) then
-		return false
+		if( _DEBUG ) then
+			print("WARNING: Unable to detour, invalid code given")
+		end
+		return false, err
 	end
 	
 	WriteMemory(newip, detourcode)
@@ -74,7 +77,7 @@ function Add(address, fn, size)
 end
 
 --[[
-$detours.Remove
+$Detours.Remove
 @desc Removes a existing detoured function, restores the original data and deletes the trampoline.
 @param number address Detoured function to restore.
 @return boolean success

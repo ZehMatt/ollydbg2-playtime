@@ -1,4 +1,4 @@
-module("assembler", package.seeall)
+module("Assembler", package.seeall)
 
 local function isJumpCommand(cmd)
 	return cmd == "jo" or cmd == "jno" or cmd == "jb" or cmd == "jnae"
@@ -94,7 +94,7 @@ local function processInstruction(ip, labels, str)
 end
 
 --[[
-$assembler.Make
+$Assembler.Make
 @desc This is a little wrapper for the Assemble function, it supports multiple commands, labels and comments.
 @param number ip Where to relocate the code
 @param string code The code to assemble, to define a label you must use '@labelname:', to use a label use '$labelname'
