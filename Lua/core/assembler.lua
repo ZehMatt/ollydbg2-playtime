@@ -1,3 +1,9 @@
+--[[
+@section Assembly
+@module Assembler
+@class
+]]
+
 module("Assembler", package.seeall)
 
 local function isJumpCommand(cmd)

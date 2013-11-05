@@ -1,3 +1,9 @@
+--[[
+@section Detours
+@module Detours
+@class
+]]
+
 module("Detours", package.seeall)
 
 -- Table of detours.
