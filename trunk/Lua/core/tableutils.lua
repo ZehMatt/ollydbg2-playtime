@@ -1,4 +1,10 @@
 --[[
+@section Table
+@module
+@class
+]]
+
+--[[
 $table.copy
 @desc Returns a copy of another table.
 @param table thetable Table to copy

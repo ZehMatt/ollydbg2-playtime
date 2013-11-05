@@ -1,3 +1,17 @@
+--[[
+@section String
+@module
+@class
+]]
+
+--[[
+$string.split
+@desc Splits a string into pieces.
+@param string str Input string
+@param string pattern Pattern to split
+@return table pieces
+$$
+]]
 function string.split(str, pat)
 	local t = {} 
 	local fpat = "(.-)" .. pat
@@ -17,24 +31,47 @@ function string.split(str, pat)
 	return t
 end
 
+--[[
+$string.ltrim
+@desc Removes all whitespaces on the left side from the input string
+@param string str Input string
+@return string str
+$$
+]]
 function string.ltrim(str)
-	while( str["1"] == ' ' ) do
-		str = string.sub(str, 2)
-	end
-	return str
+	return string.match(str, "^%s*(.-)$")
 end
 
+--[[
+$string.rtrim
+@desc Removes all whitespaces on the right side from the input string
+@param string str Input string
+@return string str
+$$
+]]
 function string.rtrim(str)
-	while( str[#str] == ' ' ) do
-		str = string.sub(str, 1, #str-1)
-	end
-	return str
+	return string.match(str, "^(.-)%s*$")
 end
 
-function string.trim(s)
-	return s:match'^%s*(.*%S)' or ''
+--[[
+$string.trim
+@desc Removes all whitespaces on the left and right side from the input string
+@param string str Input string
+@return string str
+$$
+]]
+function string.trim(str)
+	return string.match(str, "^%s*(.-)%s*$")
 end
 
+--[[
+$string.hexdump
+@desc Turns the input string into a binary string in the format of %02X
+@param string str Input string
+@param optional string spacer Space string for each byte, default is empty
+@return string binary
+$$
+]]
 function string.hexdump(str, spacer)
 	return (
 		string.gsub(str,"(.)", function (c)
@@ -43,12 +80,29 @@ function string.hexdump(str, spacer)
 	)
 end
 
+--[[
+$string.hex
+@desc Turns a value into a hex string, format is %08X
+@param number input The input number
+@return string hexval
+$$
+]]
 function string.hex(n)
 	return string.format("%08X", n)
 end
 
-function string.strpos(str, data, offset)
-	local pattern = string.format("(%s)", data)
-	local i = string.find (str, pattern, (offset or 0))
+--[[
+$string.strpos
+@desc Find the numeric position of the first occurrence of needle in the haystack string.
+@param string haystack Input string
+@param string needle Search string
+@param optional number offset Starting offset
+@return number pos
+@remarks Returns false if nothing is found
+$$
+]]
+function string.strpos(haystack, needle, offset)
+	local pattern = string.format("(%s)", needle)
+	local i = string.find (haystack, pattern, (offset or 0))
 	return (i ~= nil and i or false)
 end

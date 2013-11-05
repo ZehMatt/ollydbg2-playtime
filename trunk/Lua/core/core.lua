@@ -3,6 +3,6 @@ include("stringutils.lua")
 include("tableutils.lua")
 include("disasmutils.lua")
 include("memoryutils.lua")
-
 include("assembler.lua")
 include("detours.lua")
+include("stackutils.lua")
